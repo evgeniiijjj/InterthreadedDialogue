@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-public class MessageTasksImpl implements MessageTasks<Integer> {
+public class MessageTasksImpl implements MessageTasks<String> {
     private final int numMessages;
 
     public MessageTasksImpl(int numMessages) {
@@ -10,8 +10,8 @@ public class MessageTasksImpl implements MessageTasks<Integer> {
     }
 
     @Override
-    public List<Callable<Integer>> getTasks(int numTasks) {
-        List<Callable<Integer>> list = new ArrayList<>();
+    public List<Callable<String>> getTasks(int numTasks) {
+        List<Callable<String>> list = new ArrayList<>();
         for (int i = 0; i < numTasks; i++) {
             list.add(() -> {
                 String name = Thread.currentThread().getName();
@@ -20,7 +20,7 @@ public class MessageTasksImpl implements MessageTasks<Integer> {
                     System.out.printf("Я %s, всем привет!\n", name);
                     Thread.sleep(2000);
                 }
-                return j;
+                return String.format("%s, вывел %d сообщения", name, j);
             });
         }
         return list;
